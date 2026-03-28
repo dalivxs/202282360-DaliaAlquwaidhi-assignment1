@@ -1,34 +1,35 @@
-# AI Usage Report – Assignment 1
+# AI Usage Report – Assignment 2
 
 ## AI Tool Used
 - ChatGPT (OpenAI)
 
 ## How AI Was Used
-AI was used as a support tool during development. It helped with:
-- Clarifying certain HTML and CSS structure decisions.
-- Suggesting improvements for responsive layout.
-- Reviewing small JavaScript features (such as theme toggle logic).
-- Improving wording in documentation.
+AI was used as a support tool to improve and extend my Assignment 1 project. It helped with:
+- Suggesting ideas for interactive features
+- Improving JavaScript logic (search functionality and form validation)
+- Enhancing CSS for animations and user experience
+- Assisting with structuring documentation
 
-The core structure, project content, and customization were developed and adjusted manually.
+The core implementation and customization were completed manually.
 
 ## Benefits of Using AI
-- Helped refine layout organization.
-- Provided alternative solutions for responsiveness.
-- Assisted in improving clarity and structure of documentation.
+- Helped generate ideas for adding interactivity
+- Improved code organization and clarity
+- Saved time during debugging and styling improvements
 
 ## Challenges & Limitations
-- Some suggestions required modification to match assignment requirements.
-- AI-generated examples were not always fully aligned with the project structure.
-- Manual debugging and testing were still necessary.
+- Some suggestions required modification to match assignment requirements
+- AI-generated solutions were not always directly usable
+- I needed to test and adjust the code to ensure it worked correctly
 
 ## Learning Outcomes
-- Strengthened understanding of responsive design using CSS.
-- Improved ability to structure a multi-file web project.
-- Learned how to critically review AI-generated suggestions.
-- Gained better understanding of JavaScript DOM manipulation.
+- Better understanding of dynamic content in JavaScript
+- Improved skills in handling user input and validation
+- Learned how to enhance UI using animations and transitions
+- Gained experience reviewing and adapting AI-generated suggestions
 
 ## Responsible Use & Modifications
-- All AI suggestions were reviewed, modified, and tested before implementation.
-- Code was adjusted to ensure originality and understanding.
-- AI was used only as a guidance tool, not as a replacement for learning.
+- All AI-generated suggestions were reviewed, modified, and tested
+- Code was adjusted to ensure originality and correctness
+- I ensured I understood every part of the implementation
+- AI was used only as a support tool to assist learning

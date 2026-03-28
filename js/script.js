@@ -1,82 +1,99 @@
 // ===== Helpers =====
 const $ = (selector) => document.querySelector(selector);
+const $$ = (selector) => document.querySelectorAll(selector);
 
+// ===== Elements =====
 const themeBtn = $("#themeBtn");
-const yearEl = $("#year");
-const greetingEl = $("#greeting");
-const navToggle = $("#navToggle");
-const navLinks = $("#navLinks");
-const form = $("#contactForm");
-const formMsg = $("#formMsg");
+const contactForm = $("#contactForm");
+const formMessage = $("#formMessage");
 
-// ===== Footer year =====
-yearEl.textContent = new Date().getFullYear();
+const searchInput = $("#searchInput");
+const projectCards = $$(".project-card");
+const noResults = $("#noResults");
 
-// ===== Greeting by time =====
-(function setGreetingByTime() {
-  const hour = new Date().getHours();
-  let msg = "Hello!";
-
-  if (hour >= 5 && hour < 12) msg = "Good morning!";
-  else if (hour >= 12 && hour < 17) msg = "Good afternoon!";
-  else if (hour >= 17 && hour < 22) msg = "Good evening!";
-  else msg = "Good night!";
-
-  greetingEl.textContent = msg;
-})();
-
-// ===== Theme toggle (dark/light) =====
+// ===== Theme toggle with localStorage =====
 (function initTheme() {
-  const saved = localStorage.getItem("theme"); // "dark" or "light"
-  if (saved === "dark") document.body.classList.add("dark");
+  const savedTheme = localStorage.getItem("theme");
+
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark");
+  }
+
   updateThemeIcon();
 })();
 
 function updateThemeIcon() {
-  const isDark = document.body.classList.contains("dark");
-  themeBtn.textContent = isDark ? "☀️" : "🌙";
+  if (!themeBtn) return;
+
+  if (document.body.classList.contains("dark")) {
+    themeBtn.textContent = "☀️";
+  } else {
+    themeBtn.textContent = "🌙";
+  }
 }
 
-themeBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-  const isDark = document.body.classList.contains("dark");
-  localStorage.setItem("theme", isDark ? "dark" : "light");
-  updateThemeIcon();
-});
+if (themeBtn) {
+  themeBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
 
-// ===== Mobile nav toggle =====
-navToggle.addEventListener("click", () => {
-  const isOpen = navLinks.classList.toggle("open");
-  navToggle.setAttribute("aria-expanded", String(isOpen));
-});
+    const isDark = document.body.classList.contains("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
 
-// Close menu after clicking a link (mobile)
-navLinks.addEventListener("click", (e) => {
-  if (e.target.tagName === "A" && navLinks.classList.contains("open")) {
-    navLinks.classList.remove("open");
-    navToggle.setAttribute("aria-expanded", "false");
-  }
-});
+    updateThemeIcon();
+  });
+}
 
-// ===== Contact form (front-end only) =====
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
+// ===== Project Search (Dynamic Content) =====
+if (searchInput) {
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.trim().toLowerCase();
+    let found = false;
 
-  const name = $("#name").value.trim();
-  const email = $("#email").value.trim();
-  const message = $("#message").value.trim();
+    projectCards.forEach((card) => {
+      const projectText = card.getAttribute("data-project").toLowerCase();
 
-  if (!name || !email || !message) {
-    formMsg.textContent = "Please fill in all fields.";
-    return;
-  }
+      if (projectText.includes(query)) {
+        card.style.display = "block";
+        found = true;
+      } else {
+        card.style.display = "none";
+      }
+    });
 
-  // basic email check (simple, not perfect)
-  if (!email.includes("@") || !email.includes(".")) {
-    formMsg.textContent = "Please enter a valid email.";
-    return;
-  }
+    if (noResults) {
+      if (found) {
+        noResults.style.display = "none";
+      } else {
+        noResults.style.display = "block";
+      }
+    }
+  });
+}
 
-  formMsg.textContent = `Thanks, ${name}! Your message is ready (no backend connected).`;
-  form.reset();
-});
+// ===== Contact Form Validation and Feedback =====
+if (contactForm) {
+  contactForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const name = $("#name").value.trim();
+    const email = $("#email").value.trim();
+    const message = $("#message").value.trim();
+
+    if (!name || !email || !message) {
+      formMessage.textContent = "Please fill in all fields before sending your message.";
+      formMessage.style.color = "red";
+      return;
+    }
+
+    if (!email.includes("@") || !email.includes(".")) {
+      formMessage.textContent = "Please enter a valid email address.";
+      formMessage.style.color = "red";
+      return;
+    }
+
+    formMessage.textContent = `Thank you, ${name}! Your message has been received successfully.`;
+    formMessage.style.color = "green";
+
+    contactForm.reset();
+  });
+}
